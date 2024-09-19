@@ -1,6 +1,11 @@
 # Make video calls using https://zoom.us/
-cd /tmp
-wget https://zoom.us/client/latest/zoom_amd64.deb
-sudo apt install -y ./zoom_amd64.deb
-rm zoom_amd64.deb
-cd -
+ARCH=$(dpkg --print-architecture)
+if [ "${ARCH}" == "amd64" ]; then
+  cd /tmp
+  wget https://zoom.us/client/latest/zoom_${ARCH}.deb
+  sudo apt install -y ./zoom_${ARCH}.deb
+  rm zoom_${ARCH}.deb
+  cd -
+else
+  echo "Zoom does not provided a deb package for '${ARCH}' architecture"
+fi
